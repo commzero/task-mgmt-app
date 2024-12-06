@@ -9,4 +9,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'task-management';
+  toggleTheme() {
+    document.body.classList.toggle('dark-theme');
+  }
 }
