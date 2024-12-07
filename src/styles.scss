@@ -1,31 +1,51 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+    height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-:root {
-    /* Light Theme */
-    --background-color: #ffffff;
-    --text-color: #000000;
-    --primary-color: #6200ea;
-  }
-  
-  .dark-theme {
-    /* Dark Theme */
-    --background-color: #121212;
-    --text-color: #ffffff;
-    --primary-color: #bb86fc;
-  }
-
-
-  body {
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
-  }
-  
-  button {
+}
+
+/* Light Theme Variables */
+:root {
+    --background-color: #f5f5f5; /* Light Gray */
+    --text-color: #212121;      /* Dark Gray */
+    --primary-color: #1976d2;   /* Professional Blue */
+}
+
+/* Dark Theme Variables */
+.dark-theme {
+    --background-color: #1e1e1e; /* Neutral Dark Gray */
+    --text-color: #e0e0e0;       /* Light Gray */
+    --primary-color: #90caf9;    /* Muted Blue */
+}
+
+/* Example Button Styles for Theme Testing */
+button {
     background-color: var(--primary-color);
     color: var(--text-color);
     border: none;
     padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: rgba(25, 118, 210, 0.8); /* Adjusts hover effect */
+}
+
+
+  @media (max-width: 600px) {
+    .login-container {
+      padding: 16px;
+    }
+  
+    .app-name {
+      font-size: 18px;
+    }
   }

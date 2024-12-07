@@ -1,0 +1,14 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .app-name {
+    font-weight: bold;
+    font-size: 18px;
+    margin-left: 16px;
+  }
+
+  .spacer {
+    flex: 1;
+  }

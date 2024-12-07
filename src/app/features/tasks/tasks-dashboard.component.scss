@@ -1,0 +1,47 @@
+.tasks-dashboard {
+    padding: 16px;
+  
+    .search-bar {
+      margin-bottom: 16px;
+    }
+  
+    .task-columns {
+      display: flex;
+      gap: 16px;
+  
+      .task-column {
+        flex: 1;
+        background: #f9f9f9;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+        h3 {
+          margin: 0 0 16px;
+        }
+  
+        .task-card {
+          background: #ffffff;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          padding: 8px;
+          margin-bottom: 8px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+  
+          .task-card-content {
+            h4 {
+              margin: 0;
+            }
+            p {
+              margin: 4px 0;
+              font-size: 14px;
+              color: #666;
+            }
+          }
+        }
+      }
+    }
+  }
+  
