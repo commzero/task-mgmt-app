@@ -1,0 +1,9 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="true" header="Task Details">
+    <h3>{{ task?.name ? task.name : 'N/A' }}</h3>
+    <p><strong>Description:</strong> {{ task?.description ? task.description : 'N/A' }}</p>
+    <p><strong>Status:</strong> {{ task?.status ? task.status : 'N/A' }}</p>
+    <p><strong>Assigned To:</strong> {{ task?.assignedTo ? task.assignedTo : 'N/A' }}</p>
+    <p><strong>Priority:</strong> {{ task?.priority ? task.priority : 'N/A' }}</p>
+    <p><strong>Due Date:</strong> {{ task?.dueDate ? (task.dueDate | date: 'mediumDate') : 'N/A' }}</p>
+    <button pButton label="Close" class="p-button-secondary close-button" (click)="closeDialog()">Close</button>
+  </p-dialog>

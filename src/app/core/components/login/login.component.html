@@ -1,28 +1,61 @@
 <div class="login-container">
-    <mat-card>
-      <mat-card-title class="login-title">Login</mat-card-title>
-      <mat-card-content>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Username</mat-label>
-            <input matInput formControlName="username" />
-            <mat-error *ngIf="loginForm.get('username')?.hasError('required')">
-              Username is required
-            </mat-error>
-          </mat-form-field>
+  <div class="p-card">
+    <div class="p-card-title login-title">Login</div>
+    <div class="p-card-content">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="p-field">
+          <label for="username">Username</label>
+          <div class="input-icon-container">
+            <input
+              id="username"
+              pInputText
+              formControlName="username"
+              [ngClass]="{ 'p-invalid': loginForm.get('username')?.invalid && loginForm.get('username')?.touched }"
+            />
+            <i class="pi pi-user"></i>
+          </div>
+          <small
+            *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched"
+            class="p-error"
+          >
+            Username is required
+          </small>
+        </div>
 
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Password</mat-label>
-            <input matInput type="password" formControlName="password" />
-            <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
-              Password is required
-            </mat-error>
-          </mat-form-field>
+        <div class="p-field">
+          <label for="password">Password</label>
+          <div class="input-icon-container">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              pInputText
+              formControlName="password"
+              [ngClass]="{ 'p-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }"
+            />
+            <i
+              class="pi"
+              [ngClass]="showPassword ? 'pi-eye-slash' : 'pi-eye'"
+              (click)="togglePasswordVisibility()"
+              style="cursor: pointer; margin-left: 8px;"
+            ></i>
+          </div>
+          <small
+            *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
+            class="p-error"
+          >
+            Password is required
+          </small>
+        </div>
 
-          <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
-            Login
-          </button>
-        </form>
-      </mat-card-content>
-    </mat-card>
+        <button
+          pButton
+          label="Login"
+          icon="pi pi-sign-in"
+          class="p-button-primary"
+          type="submit"
+          [disabled]="loginForm.invalid"
+        ></button>
+      </form>
+    </div>
   </div>
+</div>

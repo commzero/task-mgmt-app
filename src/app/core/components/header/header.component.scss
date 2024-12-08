@@ -1,14 +1,48 @@
-mat-toolbar {
-    display: flex;
-    justify-content: space-between;
-  }
+.header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #007ad9; /* Matches PrimeNG's primary color */
+  color: #ffffff;
+}
 
-  .app-name {
-    font-weight: bold;
-    font-size: 18px;
-    margin-left: 16px;
-  }
 
-  .spacer {
-    flex: 1;
-  }
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.p-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.p-button-text {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; // Space between buttons
+  margin-top: 2.5rem; // Space above buttons
+}
+
+.p-button-text {
+  padding: 0.5rem 1.5rem; // Adjust padding for better click area
+  font-size: 1rem; // Optional: Adjust font size
+}
+
+.p-button .pi {
+  margin-right: 0.5rem; // Space between icon and label
+}

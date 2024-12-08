@@ -1,24 +1,26 @@
-import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-delete-confirmation-dialog',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, DialogModule, ButtonModule],
   templateUrl: './delete-confirmation-dialog.component.html',
-  styleUrl: './delete-confirmation-dialog.component.scss'
+  styleUrls: ['./delete-confirmation-dialog.component.scss']
 })
 export class DeleteConfirmationDialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<DeleteConfirmationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { taskName: string }
-  ) {}
+  @Input() visible: boolean = false; // Controls the dialog's visibility
+  @Input() taskName: string = ''; // The name of the task to delete
+  @Output() onConfirm = new EventEmitter<void>(); // Event for confirmation
+  @Output() onCancel = new EventEmitter<void>(); // Event for cancellation
 
-  onConfirm(): void {
-    this.dialogRef.close(true);
+  confirm(): void {
+    this.onConfirm.emit(); // Emit confirmation event
   }
 
-  onCancel(): void {
-    this.dialogRef.close(false);
+  cancel(): void {
+    this.onCancel.emit(); // Emit cancellation event
   }
 }

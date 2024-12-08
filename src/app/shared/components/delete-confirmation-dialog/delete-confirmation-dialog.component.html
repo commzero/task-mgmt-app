@@ -1,8 +1,17 @@
-<h1 mat-dialog-title>Confirm Deletion</h1>
-    <div mat-dialog-content>
-      Are you sure you want to delete <strong>{{ data.taskName }}</strong>?
-    </div>
-    <div mat-dialog-actions align="end">
-      <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-raised-button color="warn" (click)="onConfirm()">Delete</button>
-    </div>  
+<p-dialog 
+  [(visible)]="visible" 
+  [modal]="true" 
+  [closable]="false" 
+  [header]="'Confirm Deletion'" 
+  [breakpoints]="{'960px': '75vw', '640px': '100vw'}" 
+  [style]="{width: '400px'}">
+
+  <div>
+    Are you sure you want to delete <strong>{{ taskName }}</strong>?
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button pButton label="Cancel" class="p-button-text" (click)="cancel()"></button>
+    <button pButton label="Delete" class="p-button-danger" (click)="confirm()"></button>
+  </ng-template>
+</p-dialog>

@@ -1,14 +1,16 @@
 import { CanActivateFn } from '@angular/router';
+import { inject } from '@angular/core';
+import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
+export const authGuard: CanActivateFn = () => {
+  const userService = inject(UserService); // Inject UserService
+  const router = inject(Router); // Inject Router
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const username = localStorage.getItem('username');
-  const password = localStorage.getItem('password');
-
-  if (username === 'tasksadmin' && password === 'tasksadmin') {
+  if (userService.isAuthenticated()) {
     return true;
   } else {
-    alert('Invalid credentials! Access denied.');
-    return false; 
+    router.navigate(['/login']); // Redirect to login
+    return false;
   }
 };

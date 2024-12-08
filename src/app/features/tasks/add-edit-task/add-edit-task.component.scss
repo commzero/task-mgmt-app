@@ -1,0 +1,65 @@
+.p-field {
+    margin-bottom: 1.5rem; /* Space between form fields */
+  
+    label {
+      display: block; /* Ensure label is on a separate line */
+      margin-bottom: 0.5rem; /* Space between label and input */
+      font-weight: bold;
+      font-size: 1rem;
+      color: #cbd5e1;
+    }
+  
+    input,
+    textarea,
+    p-dropdown,
+    p-calendar {
+      width: 100%; /* Full width inputs */
+      border-radius: 4px;
+      font-size: 1rem;
+      color: #f8fafc; /* Text color for better visibility */
+    }
+  
+    textarea {
+      min-height: 120px; /* Maintain a minimum height for textareas */
+      resize: vertical; /* Allow users to resize textarea vertically */
+    }
+  
+    input::placeholder,
+    textarea::placeholder {
+      color: #94a3b8; /* Lighter placeholder color for better contrast */
+    }
+  
+    .p-error {
+      margin-top: 0.5rem; /* Space between input and error message */
+      font-size: 0.875rem; /* Smaller font size for errors */
+      color: #f87171; /* Red color for errors */
+      display: block; /* Ensure error messages are on separate lines */
+    }
+  }
+
+  :host {
+    ::ng-deep {
+        
+        .p-card {
+          padding: 32px;
+          margin-top: 24px;
+        }
+    }
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    button{
+        margin: 16px;
+        cursor: pointer;
+    }
+  }
+
+  .char-counter {
+    margin-top: 0.5rem; /* Space above the counter */
+    font-size: 0.875rem; /* Smaller font size */
+    color: #94a3b8; /* Neutral text color */
+    display: block; /* Ensure it appears on a new line */
+    text-align: right; /* Align the counter to the right */
+  }

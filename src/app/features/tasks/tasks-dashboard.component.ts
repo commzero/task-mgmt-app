@@ -1,90 +1,140 @@
-import { Component } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-// import { AddEditTaskDialogComponent } from './add-edit-task-dialog.component';
-import { Task } from '../../shared/models/tasks.model';
-import { DeleteConfirmationDialogComponent } from '../../shared/components/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { Component, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { InputTextModule } from 'primeng/inputtext';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Task } from '../../shared/models/tasks.model';
 import { TASKS } from '../../core/utilities/tasks.model';
+import { TaskDetailsComponent } from './task-details/task-details.component';
+import { Router } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-tasks-dashboard',
   standalone: true,
   imports: [
-    MatDialogModule,
-    MatSnackBarModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
     CommonModule,
+    InputTextModule,
+    DialogModule,
+    ButtonModule,
+    ConfirmDialogModule,
+    TaskDetailsComponent,
+    ToastModule,
+    DropdownModule
   ],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './tasks-dashboard.component.html',
-  styleUrl: './tasks-dashboard.component.scss'
+  styleUrls: ['./tasks-dashboard.component.scss']
 })
-export class TasksDashboardComponent {
+export class TasksDashboardComponent implements OnInit {
   tasks: Task[] = TASKS;
 
-  filteredTasks = [...this.tasks]; // Initialize filtered tasks
-
+  filteredTasks = [...this.tasks]; 
   statusColumns = {
-    pending: this.tasks.filter(task => task.status === 'Pending'),
-    inProgress: this.tasks.filter(task => task.status === 'In Progress'),
-    completed: this.tasks.filter(task => task.status === 'Completed'),
+    pending: [] as Task[],
+    inProgress: [] as Task[],
+    completed: [] as Task[],
   };
 
-  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {}
+  selectedTask: Task | null = null;
+  taskDetailVisible: boolean = false;
+  priorities = ['High', 'Medium', 'Low'];
+  statuses = ['Pending', 'In Progress', 'Completed'];
+  assignedUsers = Array.from(new Set(this.tasks.map(task => task.assignedTo)));
 
-  // openAddEditTaskDialog(task?: Task) {
-  //   const dialogRef = this.dialog.open(AddEditTaskDialogComponent, {
-  //     width: '500px',
-  //     data: task ? { ...task } : null,
-  //   });
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       if (task) {
-  //         // Edit existing task
-  //         Object.assign(task, result);
-  //       } else {
-  //         // Add new task
-  //         this.tasks.push(result);
-  //       }
-  //       this.updateStatusColumns();
-  //       this.snackBar.open('Task saved successfully!', 'Close', { duration: 3000 });
-  //     }
-  //   });
-  // }
+  constructor(
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private router: Router
+  ) {}
 
-  confirmDelete(task: Task) {
-    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
-      width: '300px',
-      data: { taskName: task.name },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.tasks = this.tasks.filter(t => t !== task);
-        this.updateStatusColumns();
-        this.snackBar.open('Task deleted successfully!', 'Close', { duration: 3000 });
+  ngOnInit(): void {
+    const navigation = this.router.getCurrentNavigation()?.extras.state;
+  
+    if (navigation?.['newTask']) {
+      this.tasks.push(navigation['newTask']);
+    }
+  
+    if (navigation?.['updatedTask']) {
+      const index = this.tasks.findIndex(t => t.id === navigation['updatedTask'].id);
+      if (index !== -1) {
+        this.tasks[index] = navigation['updatedTask'];
       }
-    });
+    }
+  
+    this.updateStatusColumns(this.tasks);
   }
 
+  confirmDelete(task: Task): void {  
+    this.confirmationService.confirm({
+      message: `Are you sure you want to delete <strong>${task.name}</strong>?`,
+      header: 'Confirm Deletion',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.tasks = this.tasks.filter(t => t !== task);
+        this.updateStatusColumns(this.tasks);
+        this.messageService.add({ severity: 'success', summary: 'Deleted', detail: 'Task deleted successfully!' });
+      },
+
+      reject: () => {
+        console.log('Deletion cancelled');
+      },
+    });
+  }
 
   applyFilter(event: KeyboardEvent) {
     const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
-    this.filteredTasks = this.tasks.filter(task =>
+    const filteredTasks = this.tasks.filter(task =>
       task.name.toLowerCase().includes(filterValue) ||
       task.description.toLowerCase().includes(filterValue)
     );
+  
+    this.updateStatusColumns(filteredTasks);
   }
 
-  updateStatusColumns() {
-    this.statusColumns.pending = this.tasks.filter(task => task.status === 'Pending');
-    this.statusColumns.inProgress = this.tasks.filter(task => task.status === 'In Progress');
-    this.statusColumns.completed = this.tasks.filter(task => task.status === 'Completed');
+  updateStatusColumns(filteredTasks: Task[]): void {
+    this.statusColumns = {
+      pending: filteredTasks.filter(task => task.status === 'Pending'),
+      inProgress: filteredTasks.filter(task => task.status === 'In Progress'),
+      completed: filteredTasks.filter(task => task.status === 'Completed'),
+    };
   }
+
+  
+  viewTaskDetails(task: Task) {
+    this.selectedTask = task;
+    this.taskDetailVisible = true;
+  }
+
+  closeTaskDetails() {
+    this.taskDetailVisible = false;
+  }
+
+  navigateToAddEditTask(task?: Task): void {
+    if (task) {
+      this.router.navigate(['/add-edit-task'], { state: { task } });
+    } else {
+      this.router.navigate(['/add-edit-task']);
+    }
+  }
+
+    applyFilterByPriority(priority: string): void {
+      const filteredTasks = this.tasks.filter(task => task.priority === priority);
+      this.updateStatusColumns(filteredTasks);
+    }
+    
+    applyFilterByStatus(status: string): void {
+      const filteredTasks = this.tasks.filter(task => task.status === status);
+      this.updateStatusColumns(filteredTasks);
+    }
+    
+    applyFilterByAssignedUser(assignedUser: string): void {
+      const filteredTasks = this.tasks.filter(task => task.assignedTo === assignedUser);
+      this.updateStatusColumns(filteredTasks);
+    }
+
 }
