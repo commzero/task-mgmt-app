@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -28,18 +29,25 @@ import { UserService } from '../../services/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   showPassword: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
+    private router: Router,
   ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+  }
+
+  ngOnInit(): void {
+    if (this.userService.isAuthenticated()) {
+      this.router.navigate(['/tasks']);
+    }
   }
 
   togglePasswordVisibility(): void {
