@@ -49,6 +49,9 @@ export class TasksDashboardComponent implements OnInit {
     completed: [],
   };
   searchValue = '';
+  selectedPriority: string | null = null;
+  selectedStatus: string | null = null;
+  selectedAssignedUser: string | null = null;
   selectedTask: Task | null = null;
   taskDetailVisible: boolean = false;
   priorities = ['High', 'Medium', 'Low'];
@@ -110,15 +113,60 @@ export class TasksDashboardComponent implements OnInit {
     });
   }
 
-  applyFilter() {
-    const filterValue = this.searchValue.toLowerCase();
-    const filteredTasks = this.tasks.filter(
-      (task) =>
-        task.name.toLowerCase().includes(filterValue) ||
-        task.description.toLowerCase().includes(filterValue),
-    );
-
+  applyAllFilters(): void {
+    let filteredTasks = [...this.tasks];
+  
+    // Apply search filter
+    if (this.searchValue) {
+      const filterValue = this.searchValue.toLowerCase();
+      filteredTasks = filteredTasks.filter(
+        (task) =>
+          task.name.toLowerCase().includes(filterValue) ||
+          task.description.toLowerCase().includes(filterValue),
+      );
+    }
+  
+    // Apply priority filter
+    if (this.selectedPriority) {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.priority === this.selectedPriority,
+      );
+    }
+  
+    // Apply status filter
+    if (this.selectedStatus) {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.status === this.selectedStatus,
+      );
+    }
+  
+    // Apply assigned user filter
+    if (this.selectedAssignedUser) {
+      filteredTasks = filteredTasks.filter(
+        (task) => task.assignedTo === this.selectedAssignedUser,
+      );
+    }
+  
     this.updateStatusColumns(filteredTasks);
+  }
+
+  applyFilter(): void {
+    this.applyAllFilters();
+  }
+  
+  applyFilterByPriority(priority: string): void {
+    this.selectedPriority = priority;
+    this.applyAllFilters();
+  }
+  
+  applyFilterByStatus(status: string): void {
+    this.selectedStatus = status;
+    this.applyAllFilters();
+  }
+  
+  applyFilterByAssignedUser(assignedUser: string): void {
+    this.selectedAssignedUser = assignedUser;
+    this.applyAllFilters();
   }
 
   updateStatusColumns(filteredTasks: Task[]): void {
@@ -145,29 +193,11 @@ export class TasksDashboardComponent implements OnInit {
       this.router.navigate(['/add-edit-task']);
     }
   }
-
-  applyFilterByPriority(priority: string): void {
-    const filteredTasks = this.tasks.filter(
-      (task) => task.priority === priority,
-    );
-    this.updateStatusColumns(filteredTasks);
-  }
-
-  applyFilterByStatus(status: string): void {
-    const filteredTasks = this.tasks.filter((task) => task.status === status);
-    this.updateStatusColumns(filteredTasks);
-  }
-
-  applyFilterByAssignedUser(assignedUser: string): void {
-    const filteredTasks = this.tasks.filter(
-      (task) => task.assignedTo === assignedUser,
-    );
-    this.updateStatusColumns(filteredTasks);
-  }
-
   resetFilters(): void {
     this.searchValue = '';
-    this.filteredTasks = [...this.tasks];
+    this.selectedPriority = null;
+    this.selectedStatus = null;
+    this.selectedAssignedUser = null;
     this.updateStatusColumns(this.tasks);
   }
 
