@@ -1,43 +1,16 @@
 <p-menubar [model]="menuItems" styleClass="header-toolbar">
   <div class="header-right">
-    <button
-      pButton
-      icon="pi pi-moon"
-      class="p-button-rounded p-button-text cursor-pointer"
-      (click)="toggleTheme()"
-    ></button>
     <span class="username">{{ username }}</span>
-    <button
-      pButton
-      icon="pi pi-sign-out"
-      class="p-button-rounded p-button-text cursor-pointer"
-      (click)="logout()"
-    ></button>
+    <button pButton icon="pi pi-sign-out" class="p-button-rounded p-button-text cursor-pointer"
+      (click)="logout()"></button>
   </div>
 </p-menubar>
 
-<p-dialog 
-  [(visible)]="showLogoutDialog" 
-  [modal]="true" 
-  [closable]="false" 
-  header="Confirm Logout" 
-  [style]="{ width: '350px' }"
->
+<p-dialog [(visible)]="showLogoutDialog" [modal]="true" [closable]="false" header="Confirm Logout"
+  [style]="{ width: '350px' }">
   <p>Are you sure you want to log out?</p>
   <div class="p-dialog-footer buttons-container">
-    <button
-      pButton
-      label="Yes"
-      icon="pi pi-check"
-      class="p-button-text"
-      (click)="confirmLogout()"
-    ></button>
-    <button
-      pButton
-      label="No"
-      icon="pi pi-times"
-      class="p-button-text"
-      (click)="cancelLogout()"
-    ></button>
+    <button pButton label="Yes" icon="pi pi-check" class="p-button-text" (click)="confirmLogout()"></button>
+    <button pButton label="No" icon="pi pi-times" class="p-button-text" (click)="cancelLogout()"></button>
   </div>
 </p-dialog>

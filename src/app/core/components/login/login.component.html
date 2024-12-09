@@ -6,18 +6,12 @@
         <div class="p-field">
           <label for="username">Username</label>
           <div class="input-icon-container">
-            <input
-              id="username"
-              pInputText
-              formControlName="username"
-              [ngClass]="{ 'p-invalid': loginForm.get('username')?.invalid && loginForm.get('username')?.touched }"
-            />
+            <input id="username" pInputText formControlName="username"
+              [ngClass]="{ 'p-invalid': loginForm.get('username')?.invalid && loginForm.get('username')?.touched }" />
             <i class="pi pi-user"></i>
           </div>
-          <small
-            *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched"
-            class="p-error"
-          >
+          <small *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched"
+            class="p-error">
             Username is required
           </small>
         </div>
@@ -25,36 +19,19 @@
         <div class="p-field">
           <label for="password">Password</label>
           <div class="input-icon-container">
-            <input
-              id="password"
-              [type]="showPassword ? 'text' : 'password'"
-              pInputText
-              formControlName="password"
-              [ngClass]="{ 'p-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }"
-            />
-            <i
-              class="pi"
-              [ngClass]="showPassword ? 'pi-eye-slash' : 'pi-eye'"
-              (click)="togglePasswordVisibility()"
-              style="cursor: pointer; margin-left: 8px;"
-            ></i>
+            <input id="password" [type]="showPassword ? 'text' : 'password'" pInputText formControlName="password"
+              [ngClass]="{ 'p-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched }" />
+            <i class="pi" [ngClass]="showPassword ? 'pi-eye-slash' : 'pi-eye'" (click)="togglePasswordVisibility()"
+              style="cursor: pointer; margin-left: 8px;"></i>
           </div>
-          <small
-            *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
-            class="p-error"
-          >
+          <small *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
+            class="p-error">
             Password is required
           </small>
         </div>
 
-        <button
-          pButton
-          label="Login"
-          icon="pi pi-sign-in"
-          class="p-button-primary"
-          type="submit"
-          [disabled]="loginForm.invalid"
-        ></button>
+        <button pButton label="Login" icon="pi pi-sign-in" class="p-button-primary" type="submit"
+          [disabled]="loginForm.invalid"></button>
       </form>
     </div>
   </div>

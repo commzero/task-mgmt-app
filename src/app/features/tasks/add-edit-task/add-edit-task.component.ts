@@ -23,10 +23,10 @@ import { UserService } from '../../../core/services/user.service';
     DropdownModule,
     ButtonModule,
     CalendarModule,
-    CardModule
+    CardModule,
   ],
   templateUrl: './add-edit-task.component.html',
-  styleUrl: './add-edit-task.component.scss'
+  styleUrl: './add-edit-task.component.scss',
 })
 export class AddEditTaskComponent implements OnInit {
   taskForm: FormGroup;
@@ -38,10 +38,10 @@ export class AddEditTaskComponent implements OnInit {
   users: { id: number; name: string }[] = [];
 
   constructor(
-    private fb: FormBuilder, 
-    private router: Router, 
+    private fb: FormBuilder,
+    private router: Router,
     private messageService: MessageService,
-    private userService: UserService
+    private userService: UserService,
   ) {
     this.taskForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
@@ -52,12 +52,11 @@ export class AddEditTaskComponent implements OnInit {
       dueDate: [null, Validators.required],
     });
     this.loadUsers();
-    this.task = this.router.getCurrentNavigation()?.extras.state?.['task'] || null;
+    this.task =
+      this.router.getCurrentNavigation()?.extras.state?.['task'] || null;
   }
 
-
   ngOnInit(): void {
-
     if (this.task) {
       this.taskForm.patchValue(this.task);
       console.log(this.task);
@@ -67,7 +66,7 @@ export class AddEditTaskComponent implements OnInit {
   onSubmit(): void {
     if (this.task) {
       // Edit existing task
-      const index = TASKS.findIndex(t => t.id === this.task?.id);
+      const index = TASKS.findIndex((t) => t.id === this.task?.id);
       if (index !== -1) {
         TASKS[index] = { ...this.taskForm.value, id: this.task.id };
         this.messageService.add({
@@ -92,11 +91,11 @@ export class AddEditTaskComponent implements OnInit {
   loadUsers(): void {
     this.userService.getAllUsers().subscribe(
       (data) => {
-        this.users = data; 
+        this.users = data;
       },
       (error) => {
         console.error('Error fetching users:', error);
-      }
+      },
     );
   }
 

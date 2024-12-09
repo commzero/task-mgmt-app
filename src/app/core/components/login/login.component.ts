@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -18,16 +23,19 @@ import { UserService } from '../../services/user.service';
     ButtonModule,
     MessagesModule,
     MessageModule,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
   loginForm: FormGroup;
   showPassword: boolean = false;
 
-  constructor(private fb: FormBuilder, private userService: UserService) {
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+  ) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -35,12 +43,15 @@ export class LoginComponent {
   }
 
   togglePasswordVisibility(): void {
-    this.showPassword = !this.showPassword; 
+    this.showPassword = !this.showPassword;
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.userService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value);
+      this.userService.login(
+        this.loginForm.get('username')?.value,
+        this.loginForm.get('password')?.value,
+      );
     }
   }
 }

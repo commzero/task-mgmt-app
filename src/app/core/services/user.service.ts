@@ -4,14 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   private readonly TOKEN_KEY = 'authToken';
   private apiUrl = 'https://dummyjson.com/users';
 
-
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+  ) {}
 
   login(username: string, password: string): boolean {
     if (username === 'tasksAdmin' && password === 'tasksAdmin') {
@@ -40,8 +42,8 @@ export class UserService {
         response.users.map((user: any) => ({
           id: user.id,
           name: `${user.firstName} ${user.lastName}`, // Combine first and last name based on dummy request data structure
-        }))
-      )
+        })),
+      ),
     );
   }
 }

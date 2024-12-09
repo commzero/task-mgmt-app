@@ -1,0 +1,20 @@
+<div class="task-card">
+    <div class="task-card-content">
+        <div (click)="onViewDetails()" class="task-info">
+            <div class="task-header">
+                <h4>{{ task?.name ? task?.name : 'N/A' }}</h4>
+                <span class="priority-badge priority-{{ task?.priority?.toLowerCase() }}">
+                    {{ task?.priority }}
+                </span>
+            </div>
+            <p>{{ task?.description ? task?.description : 'N/A' }}</p>
+            <span>Assigned to: {{ task?.assignedTo ? task?.assignedTo : 'N/A' }}</span>
+        </div>
+        <div class="task-actions">
+            <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-info cursor-pointer"
+                (click)="onEdit()"></button>
+            <button pButton icon="pi pi-trash" class="p-button-danger p-button-rounded cursor-pointer"
+                (click)="onDelete()"></button>
+        </div>
+    </div>
+</div>

@@ -7,7 +7,7 @@ import { DialogModule } from 'primeng/dialog';
   standalone: true,
   imports: [DialogModule, DatePipe],
   templateUrl: './task-details.component.html',
-  styleUrl: './task-details.component.scss'
+  styleUrl: './task-details.component.scss',
 })
 export class TaskDetailsComponent {
   @Input() task: any;

@@ -1,104 +1,77 @@
 <div class="add-edit-task">
-    <div class="form-container">
-      <p-card>
-        <ng-template pTemplate="header">
-          <h2 class="card-title">{{ task ? 'Edit Task' : 'Add New Task' }}</h2>
-        </ng-template>
-        <ng-template pTemplate="content">
-          <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-            <!-- Task Name -->
-            <div class="p-field">
-                <label for="name">Task Name</label>
-                <input
-                  id="name"
-                  pInputText
-                  formControlName="name"
-                  placeholder="Enter task name"
-                  [ngClass]="{ 'p-invalid': taskForm.get('name')?.invalid && taskForm.get('name')?.touched }"
-                />
-                <small *ngIf="taskForm.get('name')?.hasError('required') && taskForm.get('name')?.touched" class="p-error">
-                  Task Name is required
-                </small>
-                <small *ngIf="taskForm.get('name')?.hasError('maxlength') && taskForm.get('name')?.touched" class="p-error">
-                  Task Name cannot exceed 50 characters
-                </small>
-                <small class="char-counter">{{ taskForm.get('name')?.value.length }}/50 characters</small>
-              </div>
-  
-            <!-- Description -->
-            <div class="p-field">
-              <label for="description">Description</label>
-              <textarea
-              [ngClass]="{ 'p-invalid': taskForm.get('description')?.invalid && taskForm.get('name')?.touched }"
-                id="description"
-                pInputTextarea
-                formControlName="description"
-                placeholder="Enter description (optional)"
-              ></textarea>
-              <small *ngIf="taskForm.get('description')?.hasError('maxlength') && taskForm.get('description')?.touched" class="p-error">
-                Description cannot exceed 50 characters
-              </small>
-              <small class="char-counter">{{ taskForm.get('description')?.value.length }}/200 characters</small>
-            </div>
-  
-            <!-- Priority -->
-            <div class="p-field">
-              <label for="priority">Priority</label>
-              <p-dropdown
-                id="priority"
-                [options]="priorityOptions"
-                formControlName="priority"
-                placeholder="Select Priority"
-              ></p-dropdown>
-            </div>
-  
-            <!-- Status -->
-            <div class="p-field">
-              <label for="status">Status</label>
-              <p-dropdown
-                id="status"
-                [options]="statusOptions"
-                formControlName="status"
-                placeholder="Select Status"
-              ></p-dropdown>
-            </div>
-  
-            <!-- Assigned To -->
-            <div class="p-field">
-              <label for="assignedTo">Assigned To</label>
-              <p-dropdown
-                id="assignedTo"
-                [options]="users"
-                optionLabel="name"
-                optionValue="name"
-                formControlName="assignedTo"
-                placeholder="Select User"
-              ></p-dropdown>
-            </div>
-  
-            <!-- Due Date -->
-            <div class="p-field">
-              <label for="dueDate">Due Date</label>
-              <p-calendar
-              placeholder="Select Due Date"
-                id="dueDate"
-                formControlName="dueDate"
-                [minDate]="minDate"
-                dateFormat="mm/dd/yy"
-              ></p-calendar>
-              <small *ngIf="taskForm.get('dueDate')?.hasError('required') && taskForm.get('dueDate')?.touched" class="p-error">
-                Due Date is required
-              </small>
-            </div>
-  
-            <!-- Action Buttons -->
-            <div class="button-container">
-              <button pButton type="submit" label="Save" [disabled]="taskForm.invalid"></button>
-              <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="onCancel()"></button>
-            </div>
-          </form>
-        </ng-template>
-      </p-card>
-    </div>
+  <div class="form-container">
+    <p-card>
+      <ng-template pTemplate="header">
+        <h2 class="card-title">{{ task ? 'Edit Task' : 'Add New Task' }}</h2>
+      </ng-template>
+      <ng-template pTemplate="content">
+        <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+          <!-- Task Name -->
+          <div class="p-field">
+            <label for="name">Task Name</label>
+            <input id="name" pInputText formControlName="name" placeholder="Enter task name"
+              [ngClass]="{ 'p-invalid': taskForm.get('name')?.invalid && taskForm.get('name')?.touched }" />
+            <small *ngIf="taskForm.get('name')?.hasError('required') && taskForm.get('name')?.touched" class="p-error">
+              Task Name is required
+            </small>
+            <small *ngIf="taskForm.get('name')?.hasError('maxlength') && taskForm.get('name')?.touched" class="p-error">
+              Task Name cannot exceed 50 characters
+            </small>
+            <small class="char-counter">{{ taskForm.get('name')?.value.length }}/50 characters</small>
+          </div>
+
+          <!-- Description -->
+          <div class="p-field">
+            <label for="description">Description</label>
+            <textarea [ngClass]="{ 'p-invalid': taskForm.get('description')?.invalid && taskForm.get('name')?.touched }"
+              id="description" pInputTextarea formControlName="description"
+              placeholder="Enter description (optional)"></textarea>
+            <small *ngIf="taskForm.get('description')?.hasError('maxlength') && taskForm.get('description')?.touched"
+              class="p-error">
+              Description cannot exceed 50 characters
+            </small>
+            <small class="char-counter">{{ taskForm.get('description')?.value.length }}/200 characters</small>
+          </div>
+
+          <!-- Priority -->
+          <div class="p-field">
+            <label for="priority">Priority</label>
+            <p-dropdown id="priority" [options]="priorityOptions" formControlName="priority"
+              placeholder="Select Priority"></p-dropdown>
+          </div>
+
+          <!-- Status -->
+          <div class="p-field">
+            <label for="status">Status</label>
+            <p-dropdown id="status" [options]="statusOptions" formControlName="status"
+              placeholder="Select Status"></p-dropdown>
+          </div>
+
+          <!-- Assigned To -->
+          <div class="p-field">
+            <label for="assignedTo">Assigned To</label>
+            <p-dropdown id="assignedTo" [options]="users" optionLabel="name" optionValue="name"
+              formControlName="assignedTo" placeholder="Select User"></p-dropdown>
+          </div>
+
+          <!-- Due Date -->
+          <div class="p-field">
+            <label for="dueDate">Due Date</label>
+            <p-calendar placeholder="Select Due Date" id="dueDate" formControlName="dueDate" [minDate]="minDate"
+              dateFormat="mm/dd/yy"></p-calendar>
+            <small *ngIf="taskForm.get('dueDate')?.hasError('required') && taskForm.get('dueDate')?.touched"
+              class="p-error">
+              Due Date is required
+            </small>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="button-container">
+            <button pButton type="submit" label="Save" [disabled]="taskForm.invalid"></button>
+            <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="onCancel()"></button>
+          </div>
+        </form>
+      </ng-template>
+    </p-card>
   </div>
-  
+</div>

@@ -7,8 +7,13 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './core/services/interceptor.service';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideAnimationsAsync(), {
-    provide: HTTP_INTERCEPTORS,
-    useClass: InterceptorService
-  }]
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideAnimationsAsync(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+    },
+  ],
 };

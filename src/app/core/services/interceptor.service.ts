@@ -4,22 +4,23 @@ import {
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
-  HttpErrorResponse
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InterceptorService implements HttpInterceptor {
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler,
+  ): Observable<HttpEvent<any>> {
     const modifiedReq = req.clone({
       setHeaders: {
-        Authorization: `Bearer `, // Replace with dynamic token
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     });
 
     return next.handle(modifiedReq).pipe(
@@ -29,7 +30,7 @@ export class InterceptorService implements HttpInterceptor {
         console.error(errorMessage);
         alert(errorMessage);
         return throwError(() => new Error(errorMessage));
-      })
+      }),
     );
   }
 }

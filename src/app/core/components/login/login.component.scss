@@ -13,9 +13,9 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .p-card-title {
@@ -57,12 +57,12 @@
 
   input {
     flex: 1;
-    padding-right: 2rem; // Add space for the icon
+    padding-right: 2rem;
   }
 
   i {
     position: absolute;
-    right: 0.5rem; // Position the icon to the right of the input
+    right: 0.5rem;
     color: #888;
     font-size: 1.2rem;
     cursor: pointer;
@@ -87,6 +87,3 @@ button.p-button {
     background-color: #005bb5;
   }
 }
-
-
-
