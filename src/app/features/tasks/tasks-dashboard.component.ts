@@ -14,6 +14,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TaskItemComponent } from './task-item/task-item.component';
 import { DragDropModule } from 'primeng/dragdrop';
 import { FormsModule } from '@angular/forms';
+import { TaskService } from '../../core/services/task.service';
 
 @Component({
   selector: 'app-tasks-dashboard',
@@ -60,6 +61,7 @@ export class TasksDashboardComponent implements OnInit {
   constructor(
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
+    private taskService: TaskService,
     private router: Router,
   ) {}
 
@@ -79,7 +81,10 @@ export class TasksDashboardComponent implements OnInit {
       }
     }
 
-    this.updateStatusColumns(this.tasks);
+    this.taskService.getTasks().subscribe((tasks) => {
+      this.tasks = tasks;
+      this.updateStatusColumns(tasks);
+    });
   }
 
   confirmDelete(task: Task): void {
@@ -88,17 +93,19 @@ export class TasksDashboardComponent implements OnInit {
       header: 'Confirm Deletion',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.tasks = this.tasks.filter((t) => t !== task);
-        this.updateStatusColumns(this.tasks);
+        this.taskService.deleteTask(task.id);
         this.messageService.add({
           severity: 'success',
-          summary: 'Deleted',
-          detail: 'Task deleted successfully!',
+          summary: 'Task Deleted',
+          detail: `Task "${task.name}" deleted successfully!`,
         });
       },
 
       reject: () => {
-        console.log('Deletion cancelled');
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Cancelled',
+        });
       },
     });
   }

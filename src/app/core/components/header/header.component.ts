@@ -4,11 +4,13 @@ import { ButtonModule } from 'primeng/button';
 import { UserService } from '../../services/user.service';
 import { DialogModule } from 'primeng/dialog';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MenubarModule, ButtonModule, DialogModule],
+  imports: [MenubarModule, ButtonModule, DialogModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
@@ -18,6 +20,7 @@ export class HeaderComponent {
 
   constructor(
     private userService: UserService,
+    private messageService: MessageService,
     private router: Router,
   ) {}
 
@@ -40,5 +43,9 @@ export class HeaderComponent {
 
   cancelLogout(): void {
     this.showLogoutDialog = false;
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Logout Cancelled',
+    });
   }
 }
